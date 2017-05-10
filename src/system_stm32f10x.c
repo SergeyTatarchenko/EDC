@@ -1,5 +1,5 @@
 #include "stm32f10x.h"
-#include "system.h"
+#include "system_stm32f10x.h"
 
 #define RCC_CFGR_PLLSRC_HSE ((uint32_t)0x08)
 
