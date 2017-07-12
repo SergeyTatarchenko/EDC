@@ -1,8 +1,8 @@
 #include "stm32f10x.h"
 #include "i2c.h"
 
-extern uint32_t clock = 10000000UL; //PLL freq 
-extern uint32_t I2C_speed = 100000UL; // 100 KHz I2C speed
+uint32_t clock = 10000000UL; //PLL freq 
+uint32_t I2C_speed = 100000UL; // 100 KHz I2C speed
 
 void I2CSendData(uint8_t adress, uint8_t data){
 	I2CSendStart();			// send START bit begin transmittion

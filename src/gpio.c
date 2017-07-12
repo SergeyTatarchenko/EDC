@@ -45,8 +45,8 @@ void GPIOInit(){
 	GPIOA->CRL |= GPIO_CRL_CNF6_1;		// GPIOA6 input whith pull up
 	GPIOA->CRL &=~GPIO_CRL_MODE6; 		// GPIOA6 input mode
 
-	GPIOA->CRL |= GPIO_CRL_CNF7_1;		// GPIOA6 input whith pull up
-	GPIOA->CRL &=~GPIO_CRL_MODE7; 		// GPIOA6 input mode
+	GPIOA->CRL |= GPIO_CRL_CNF7_1;		// GPIOA7 input whith pull up
+	GPIOA->CRL &=~GPIO_CRL_MODE7; 		// GPIOA7 input mode
 
 	// SPI slave select pins
 	GPIOA->CRH &=~GPIO_CRH_CNF8;		// GPIOA8 output push pull
@@ -65,9 +65,9 @@ void GPIOInit(){
 	GPIOA->CRH |= GPIO_CRH_MODE12_1; 	// GPIOA12 speed 2 MHz
 
 	// source sensors pins
-	GPIOB->CRH |= GPIO_CRH_CNF8_0;		// GPIOB8 input floating
+	GPIOB->CRH |= GPIO_CRH_CNF8_1;		// GPIOB8 input floating
 	GPIOB->CRH &=~GPIO_CRH_MODE8;		// GPIOB8 input mode
 
-	GPIOB->CRH |= GPIO_CRH_CNF9_0;		// GPIOB9 input floating
-	GPIOB->CRH &=~GPIO_CRH_MODE9;		// GPIOB9 input mode	
-}
+	GPIOB->CRH |= GPIO_CRH_CNF9_1;		// GPIOB9 input floating
+	GPIOB->CRH &=~GPIO_CRH_MODE9;		// GPIOB9 input mode
+}	
