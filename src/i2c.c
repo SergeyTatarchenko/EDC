@@ -35,9 +35,8 @@ void I2CSendStop(){
 	while((I2C2->SR1 & I2C_SR2_BUSY)!=0); 
 }
 
-void I2CInit(){
-	RCC->APB1ENR |= RCC_APB1ENR_I2C2EN; //I2C2 enable
 
+void I2CGPIOInit(){
 		// I2C pins   
 	GPIOB->CRH |= GPIO_CRH_CNF10;		// GPIOB10 alternate function open drain
 	GPIOB->CRH |= GPIO_CRH_MODE10_1;	// GPIOB10 speed 2 MHz
@@ -45,6 +44,10 @@ void I2CInit(){
 	GPIOB->CRH |= GPIO_CRH_CNF11;		// GPIOB11 alternate function open drain
 	GPIOB->CRH |= GPIO_CRH_MODE11_1;	// GPIOB11 speed 2 MHz
 	/*SCL is PB10 and SDA is PB11*/
+}
+
+void I2CInit(){
+	RCC->APB1ENR |= RCC_APB1ENR_I2C2EN; //I2C2 clock enable
 
 	I2C2->CR1 &= (uint32_t)I2C_CR1_SWRST;//I2C reset
 	I2C2->CR1 = (uint32_t)0x00;

@@ -6,56 +6,45 @@
 #include "lcd1602.h"
 #include "gpio.h"
 #include "spi.h"
+#include "l9848.h"
 
-void Test();
 
 
 void main()
 {
-	int TestComplete;
+	int data = 0x01;
 	uint8_t LCD_ADRESS = 0x4E;
 
+	/*start prorgam*/
+	delay(500000UL);
 
-	SystemInit(); 		// call system configuration 
-	GPIOInit();			//general I/O init
-	I2CInit();			// I2C2 module init
-	LCDInit();			// init LCD  wia I2C	
-
-	GPIOC->ODR |= GPIO_ODR_ODR13;
+	SystemInit(); 		// call system configuration
+	GPIOInit();			//general I/O init configuration
+	/* enable and configure I2C bus  */
+	I2CGPIOInit();
+	I2CInit();
+	/* configure LCD1602 */
+	LCDInit();			// init LCD through I2C
+	/*enable and configure SPI bus */	
+	SPIGPIOInit();
+	SPIInit();
+	/*configure switch driver*/
+	L9848Setup();
 
 	while(1){
-		
 
-
-
-	}
-}
-
-void Test(){
-	if((GPIOB->IDR & (uint16_t)GPIO_IDR_IDR9) != 0) {
-		LCDSendErrorMessage();
-	}
-	if((GPIOB->IDR & (uint16_t)GPIO_IDR_IDR9) == 0) {
-		LCDSendOkMessage();
-	}
-		
-}
-/*// test 
-		if(((GPIOA->IDR & GPIO_IDR_IDR7) == 0) && TestComplete == 0 ) {
+		if(((GPIOA->IDR & GPIO_IDR_IDR7) == 0)) {
 		delay(15000UL);
-		if(((GPIOA->IDR & GPIO_IDR_IDR7) == 0) && TestComplete == 0 ) {
-			Test();
-			TestComplete=1;
+		if((GPIOA->IDR & GPIO_IDR_IDR7) == 0) {
+			GPIOB->ODR |= GPIO_ODR_ODR12;
+			delay(10000UL);
+			SPISendData(Channels[0]);
+			delay(10000UL);
+			GPIOB->ODR &= ~GPIO_ODR_ODR12;
+			GPIOC->ODR |= GPIO_ODR_ODR13;
 			while((GPIOA->IDR & GPIO_IDR_IDR7) == 0);
 			}	
 		}	
-		// reset
-		if(((GPIOA->IDR & GPIO_IDR_IDR6) == 0) && TestComplete == 1 ) {
-		delay(15000UL);
-		if(((GPIOA->IDR & GPIO_IDR_IDR6) == 0) && TestComplete == 1 ) {
-			LCDClearDisplay();
-			TestComplete=0;
-			while((GPIOA->IDR & GPIO_IDR_IDR6) == 0);
-			}
-		}	
-*/
+
+	}
+}
