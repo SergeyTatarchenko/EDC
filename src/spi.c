@@ -33,7 +33,7 @@ void SPIInit() {
 	SPI2-> CR1 &= ~SPI_CR1_CPHA;
 	SPI2-> CR1 &= ~SPI_CR1_CPOL;
 	SPI2-> CR1 &=~SPI_CR1_DFF;	// 8 bit data frame
-	SPI2-> CR1 &=~SPI_CR1_SSM;		// NSS software management
+	SPI2-> CR1 |= SPI_CR1_SSM;		// NSS software management
 	SPI2-> CR1 |= SPI_CR1_SPE;		// SPI emable
 }
 
