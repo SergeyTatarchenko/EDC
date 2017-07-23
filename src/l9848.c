@@ -1,7 +1,6 @@
 #include "stm32f10x.h"
 #include "spi.h"
 #include "l9848.h"
-
 uint8_t Channels[8]={0};
 
 void L9848Setup(){

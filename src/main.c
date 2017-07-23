@@ -12,7 +12,6 @@
 
 void main()
 {
-	int data = 0x01;
 	uint8_t LCD_ADRESS = 0x4E;
 
 	/*start prorgam*/
@@ -24,27 +23,25 @@ void main()
 	I2CGPIOInit();
 	I2CInit();
 	/* configure LCD1602 */
-	LCDInit();			// init LCD through I2C
-	/*enable and configure SPI bus */	
+	//LCDInit();			// init LCD through I2C (only when I2C is connected)
+	/*enable and configure SPI bus */
 	SPIGPIOInit();
 	SPIInit();
 	/*configure switch driver*/
 	L9848Setup();
-
+	GPIOC-> ODR |= GPIO_ODR_ODR13;  //led on
 	while(1){
-
 		if(((GPIOA->IDR & GPIO_IDR_IDR7) == 0)) {
 		delay(15000UL);
 		if((GPIOA->IDR & GPIO_IDR_IDR7) == 0) {
 			GPIOB->ODR |= GPIO_ODR_ODR12;
 			delay(10000UL);
-			SPISendData(Channels[0]);
+			//SPISendData(Channels[0]);
 			delay(10000UL);
-			GPIOB->ODR &= ~GPIO_ODR_ODR12;
-			GPIOC->ODR |= GPIO_ODR_ODR13;
+			//GPIOB->ODR &= ~GPIO_ODR_ODR12;
+			GPIOC->ODR &= ~GPIO_ODR_ODR13;  //led on
 			while((GPIOA->IDR & GPIO_IDR_IDR7) == 0);
-			}	
-		}	
-
+			}
+		}
 	}
 }

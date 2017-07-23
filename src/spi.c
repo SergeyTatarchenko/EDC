@@ -4,6 +4,7 @@
 
 void SPIGPIOInit(){
 
+	RCC->APB2ENR |= RCC_APB2ENR_AFIOEN; // Alternate Function I/O clock enable
 	// SPI main pins
 	GPIOB->CRH |= GPIO_CRH_CNF13_1;		// GPIOB13 alternate function push-pull
 	GPIOB->CRH |= GPIO_CRH_MODE13_1;	// GPIOB13 speed 2 MHz
@@ -13,22 +14,21 @@ void SPIGPIOInit(){
 
 	GPIOB->CRH |= GPIO_CRH_CNF15_1;		// GPIOB15 alternate function push-pull
 	GPIOB->CRH |= GPIO_CRH_MODE15_1;	// GPIOB15 speed 2 MHz
-	
+
 	/*SCK is PB13, MISO is PB14, MOSI is PB15*/
 
-	GPIOB->CRH |= GPIO_CRH_CNF12;		// GPIOB12 output push-pull
+	GPIOB->CRH &= ~GPIO_CRH_CNF12;		// GPIOB12 output push-pull
 	GPIOB->CRH |= GPIO_CRH_MODE12_1;	// GPIOB12 speed 2 MHz
-	// NSS1 pin  
+	// NSS1 pin
 
 }
 void SPIInit() {
 
 	RCC->APB1ENR |= RCC_APB1ENR_SPI2EN; //SPI2 enable
-	
-	SPI2->CR1 &= (uint32_t)0x00; //reset
 
+	SPI2->CR1 &= (uint32_t)0x00; //reset
 	/* SPI master configuration */
-	SPI2-> CR1 |= SPI_CR1_MSTR;		// SPI master mode 
+	SPI2-> CR1 |= SPI_CR1_MSTR;		// SPI master mode
 	SPI2-> CR1 |= SPI_CR1_BR;		// SPI baud rate is FQ/256
 	SPI2-> CR1 &= ~SPI_CR1_CPHA;
 	SPI2-> CR1 &= ~SPI_CR1_CPOL;
@@ -44,7 +44,7 @@ void SPISendData (uint8_t data){
 }
 
 void SPISlaveSelect( int SlaveNumber){
-	
+
 	switch (SlaveNumber){
 		case 1:
 			GPIOC->ODR |= GPIO_ODR_ODR13;
