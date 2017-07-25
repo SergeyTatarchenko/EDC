@@ -6,15 +6,16 @@ uint32_t I2C_speed = 100000UL; // 100 KHz I2C speed
 
 void I2CSendData(uint8_t adress, uint8_t data){
 	I2CSendStart();			// send START bit begin transmittion
-	I2CSendAdress(adress);	// send slave adress
-	I2CSendByte(data);		// send data to slave
-	I2CSendStop();			// send STOP bit, end of transmittion  
-
+	if((I2C2->SR1 & I2C_SR1_AF)==0){
+		I2CSendAdress(adress);	// send slave adress
+		I2CSendByte(data);		// send data to slave
+		I2CSendStop();			// send STOP bit, end of transmittion  
+	}
 }
 
 void I2CSendStart(){
 	I2C2->CR1 |= I2C_CR1_START; //send start bit
-	while((I2C2->SR1 & I2C_SR1_SB) == 0); 
+	while(((I2C2->SR1 & I2C_SR1_SB) == 0) && ((I2C2->SR1 & I2C_SR1_AF)== 0)); 
 }
 
 void I2CSendAdress(uint8_t adress){

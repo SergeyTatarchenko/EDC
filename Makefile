@@ -12,9 +12,9 @@
 #	Makefile
 #	stm32_flash.ld
 #-------------------------------------------------------------------
-CC=/usr/local/gcc-arm-none-eabi-6_2-2016q4/bin/arm-none-eabi-gcc
-LD=/usr/local/gcc-arm-none-eabi-6_2-2016q4/bin/arm-none-eabi-gcc
-CP=/usr/local/gcc-arm-none-eabi-6_2-2016q4/bin/arm-none-eabi-objcopy
+CC=/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc
+LD=/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc
+CP=/usr/local/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-objcopy
 #-------------------------------------------------------------------
 source_dirs:= src
 include_dirs:= inc
