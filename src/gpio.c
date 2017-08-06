@@ -4,6 +4,7 @@ void GPIOInit(){
 	RCC->APB2ENR |= RCC_APB2ENR_IOPCEN; // GPIOC clocking ON
 	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN; // GPIOA clocking ON
 	RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; // GPIOB clocking ON
+	RCC->APB2ENR |= RCC_APB2ENR_AFIOEN; // Alternate Function I/O clock enable
 	
 	//reset registers
 	GPIOA->CRL &=(uint32_t)0x00;

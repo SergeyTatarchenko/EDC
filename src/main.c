@@ -36,9 +36,9 @@ void main()
 		if((GPIOA->IDR & GPIO_IDR_IDR7) == 0) {
 			GPIOB->ODR |= GPIO_ODR_ODR12;
 			delay(10000UL);
-			//SPISendData(Channels[0]);
+			SPISendData(Channels[0]);
 			delay(10000UL);
-			//GPIOB->ODR &= ~GPIO_ODR_ODR12;
+			GPIOB->ODR &= ~GPIO_ODR_ODR12;
 			GPIOC->ODR &= ~GPIO_ODR_ODR13;  //led on
 			while((GPIOA->IDR & GPIO_IDR_IDR7) == 0);
 			}
