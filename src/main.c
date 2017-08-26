@@ -8,7 +8,10 @@
 #include "spi.h"
 #include "l9848.h"
 
+#define LED_OFF (GPIOC-> ODR |= GPIO_ODR_ODR13)
+#define LED_ON (GPIOC-> ODR &= ~GPIO_ODR_ODR13) 
 
+#define BUTTON1 (GPIOA->IDR & GPIO_IDR_IDR7)
 
 void main()
 {
@@ -29,18 +32,18 @@ void main()
 	SPIInit();
 	/*configure switch driver*/
 	L9848Setup();
-	GPIOC-> ODR |= GPIO_ODR_ODR13;  //led on
-	while(1){
-		if(((GPIOA->IDR & GPIO_IDR_IDR7) == 0)) {
+	LED_OFF;
+	while(1){			
+		if (BUTTON1 == 0) {
 		delay(15000UL);
-		if((GPIOA->IDR & GPIO_IDR_IDR7) == 0) {
+		if (BUTTON1 == 0) {
 			GPIOB->ODR |= GPIO_ODR_ODR12;
 			delay(10000UL);
 			SPISendData(Channels[0]);
 			delay(10000UL);
 			GPIOB->ODR &= ~GPIO_ODR_ODR12;
-			GPIOC->ODR &= ~GPIO_ODR_ODR13;  //led on
-			while((GPIOA->IDR & GPIO_IDR_IDR7) == 0);
+			LED_ON;
+			while(BUTTON1 == 0);
 			}
 		}
 	}

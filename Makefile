@@ -3,7 +3,7 @@
 # makefile for stm32f103c8t6
 #
 # \|/ project tree \|/
-# \/				       \/
+# \/			   \/
 #	src
 #		*.c
 #		*.s
