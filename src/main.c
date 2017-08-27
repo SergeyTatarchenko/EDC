@@ -9,7 +9,10 @@
 #include "l9848.h"
 
 #define LED_OFF (GPIOC-> ODR |= GPIO_ODR_ODR13)
-#define LED_ON (GPIOC-> ODR &= ~GPIO_ODR_ODR13) 
+#define LED_ON (GPIOC-> ODR &= ~GPIO_ODR_ODR13)
+
+#define CS1HIGH (GPIOB-> BSRR = GPIO_BSRR_BS12)
+#define CS1LOW 	(GPIOB-> BSRR = GPIO_BSRR_BR12)
 
 #define BUTTON1 (GPIOA->IDR & GPIO_IDR_IDR7)
 
@@ -37,11 +40,11 @@ void main()
 		if (BUTTON1 == 0) {
 		delay(15000UL);
 		if (BUTTON1 == 0) {
-			GPIOB->ODR |= GPIO_ODR_ODR12;
+			CS1HIGH;
 			delay(10000UL);
 			SPISendData(Channels[0]);
 			delay(10000UL);
-			GPIOB->ODR &= ~GPIO_ODR_ODR12;
+			CS1LOW;
 			LED_ON;
 			while(BUTTON1 == 0);
 			}
