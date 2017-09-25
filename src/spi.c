@@ -1,6 +1,9 @@
 #include "stm32f10x.h"
 #include "spi.h"
 
+#define CS1HIGH (GPIOB-> BSRR = GPIO_BSRR_BS12)
+#define CS1LOW 	(GPIOB-> BSRR = GPIO_BSRR_BR12)
+
 
 void SPIGPIOInit(){
 
@@ -39,19 +42,8 @@ void SPIInit() {
 	SPI2-> CR1 |= SPI_CR1_SPE;		// SPI emable
 }
 
-void SPISendData (uint8_t data){
+void SPISendByte (uint8_t byte){
+	SPI2-> DR = byte;
 	while((SPI2->SR & SPI_SR_TXE) == 0);
-	SPI2-> DR = data;
-}
-
-void SPISlaveSelect( int SlaveNumber){
-
-	switch (SlaveNumber){
-		case 1:
-			GPIOC->ODR |= GPIO_ODR_ODR13;
-		case 2:
-			GPIOC->ODR |= GPIO_ODR_ODR13;
-		case 3:
-			GPIOC->ODR |= GPIO_ODR_ODR13;
-	}
+	
 }

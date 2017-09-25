@@ -7,19 +7,18 @@
 #include "gpio.h"
 #include "spi.h"
 #include "l9848.h"
+#include "delay.h"
 
 #define LED_OFF (GPIOC-> ODR |= GPIO_ODR_ODR13)
 #define LED_ON (GPIOC-> ODR &= ~GPIO_ODR_ODR13)
 
-#define CS1HIGH (GPIOB-> BSRR = GPIO_BSRR_BS12)
-#define CS1LOW 	(GPIOB-> BSRR = GPIO_BSRR_BR12)
-
 #define BUTTON1 (GPIOA->IDR & GPIO_IDR_IDR7)
+
+uint8_t ChannelsStatus = 0;
 
 void main()
 {
 	uint8_t LCD_ADRESS = 0x4E;
-
 	/*start prorgam*/
 	delay(500000UL);
 
@@ -40,12 +39,8 @@ void main()
 		if (BUTTON1 == 0) {
 		delay(15000UL);
 		if (BUTTON1 == 0) {
-			CS1HIGH;
-			delay(10000UL);
-			SPISendData(Channels[0]);
-			delay(10000UL);
-			CS1LOW;
-			LED_ON;
+			test(ChannelsStatus);
+			LED_ON;			
 			while(BUTTON1 == 0);
 			}
 		}

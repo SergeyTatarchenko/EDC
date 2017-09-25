@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include "i2c.h"
 #include "lcd1602.h"
-
+#include "delay.h"
 
 uint8_t LCD_ADRESS = 0x4E;
 uint8_t Command0[]={0x34,0x30};
@@ -143,8 +143,3 @@ void LCDSendWord(uint8_t *pointer){
 
 
 
-void delay(unsigned long p){
-	 volatile unsigned long i;			// p=10 000 ~1ms
-	for (int i = 0; i < p; ++i);
-
-}
